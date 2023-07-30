@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 
 project(Piccolo VERSION 0.1.0)
 
+if(WIN32)
+    add_compile_options(/wd5262)
+    add_compile_options(/wd5264)
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(BUILD_SHARED_LIBS OFF)
