@@ -22,8 +22,7 @@
 // where t > 0 indicates a counterclockwise rotation in the xy-plane.
 
 namespace MyPiccolo {
-    // 一个3×3的矩阵, 可以表示关于轴的旋转
-    // 使用右手坐标系
+    // 一个3×3的矩阵, 可以表示关于轴的旋转, 使用右手坐标系
     class Matrix3x3 {
     public:
         float m_mat[3][3];

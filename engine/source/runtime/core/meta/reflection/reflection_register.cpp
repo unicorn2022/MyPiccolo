@@ -8,11 +8,11 @@
 #include "_generated/reflection/all_reflection.h"
 #include "_generated/serializer/all_serializer.ipp"
 
-namespace Piccolo {
+namespace MyPiccolo {
     namespace Reflection {
         void TypeMetaRegister::Unregister() {
             // 调用接口的取消注册函数
             TypeMetaRegisterinterface::unregisterAll();
         }
     } // namespace Reflection
-} // namespace Piccolo
+} // namespace MyPiccolo

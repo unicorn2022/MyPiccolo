@@ -44,11 +44,17 @@ cmake --build build --config Release
     - 四则运算
     - 点乘、叉乘、长度、归一化、中点、clamp
     - 线性插值、向平面投影、两向量之间的夹角、旋转到dest的最短四元数
-  - `/matrix3~4.h`：对矩阵的封装，实现了
+  - `/matrix3.h`：对矩阵的封装，实现了
     - 四则运算、与数组的转换
     - 转置、求逆、行列式
     - QDU分解、旋转矩阵<=>绕轴旋转角度、缩放矩阵
-  - `/quaternion.h`：四元数的实现
+  - `/matrix4.h`：齐次坐标矩阵，实现了
+    - 
+  - `/quaternion.h`：四元数，实现了
+    - 四则运算
+    - 与旋转矩阵、绕轴旋转、局部坐标系的转换
+    - 点乘、长度、归一化、求逆、共轭、转化成欧拉角
+    - 插值计算：sLerp、nLerp
 
 - `/meta`：
 
@@ -92,3 +98,4 @@ cmake --build build --config Release
     - 实现了基础类型的偏特化：char、int、unsigned int、float、double、bool、string
 
 - 
+

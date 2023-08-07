@@ -31,15 +31,15 @@ namespace MyPiccolo {
 
 /* 当前类的友元类 */
 // ##：是预处理拼接标记, 在宏定义展开的时候, 将##左边的内容, 与##右边的内容拼接到一起
-#define REFLECTION_BODY(class_name)                                                                                                                            \
-    friend class Reflection::TypeFieldReflectionOparator::Type##class_name##Operator;                                                                          \
+#define REFLECTION_BODY(class_name)                                                   \
+    friend class Reflection::TypeFieldReflectionOparator::Type##class_name##Operator; \
     friend class PSerializer;
 /* 当前类的反射类: 注册到 Reflection::TypeFieldReflectionOparato 中 */
-#define REFLECTION_TYPE(class_name)                                                                                                                            \
-    namespace Reflection {                                                                                                                                     \
-        namespace TypeFieldReflectionOparator {                                                                                                                \
-            class Type##class_name##Operator;                                                                                                                  \
-        }                                                                                                                                                      \
+#define REFLECTION_TYPE(class_name)             \
+    namespace Reflection {                      \
+        namespace TypeFieldReflectionOparator { \
+            class Type##class_name##Operator;   \
+        }                                       \
     };
 
 /* 注册相关宏 */
@@ -54,20 +54,20 @@ namespace MyPiccolo {
 
 /* 反射指针 */
 // new
-#define PICCOLO_REFLECTION_NEW(name, ...) Reflection::ReflectionPtr(#name, new name(__VA_ARGS__));
+#define MyPICCOLO_REFLECTION_NEW(name, ...) Reflection::ReflectionPtr(#name, new name(__VA_ARGS__));
 // delete
-#define PICCOLO_REFLECTION_DELETE(value)                                                                                                                       \
-    if (value) {                                                                                                                                               \
-        delete value.operator->();                                                                                                                             \
-        value.getPtrReference() = nullptr;                                                                                                                     \
+#define MyPICCOLO_REFLECTION_DELETE(value) \
+    if (value) {                           \
+        delete value.operator->();         \
+        value.getPtrReference() = nullptr; \
     }
 // deep copy
-#define PICCOLO_REFLECTION_DEEP_COPY(type, dst_ptr, src_ptr) *static_cast<type*>(dst_ptr) = *static_cast<type*>(src_ptr.getPtr());
+#define MyPICCOLO_REFLECTION_DEEP_COPY(type, dst_ptr, src_ptr) *static_cast<type*>(dst_ptr) = *static_cast<type*>(src_ptr.getPtr());
 
 /* Meta定义 */
-#define TypeMetaDef(class_name, ptr) Piccolo::Reflection::ReflectionInstance(Piccolo::Reflection::TypeMeta::newMetaFromName(#class_name), (class_name*)ptr)
-#define TypeMetaDefPtr(class_name, ptr)                                                                                                                        \
-    new Piccolo::Reflection::ReflectionInstance(Piccolo::Reflection::TypeMeta::newMetaFromName(#class_name), (class_name*)ptr)
+#define TypeMetaDef(class_name, ptr) MyPiccolo::Reflection::ReflectionInstance(MyPiccolo::Reflection::TypeMeta::newMetaFromName(#class_name), (class_name*)ptr)
+#define TypeMetaDefPtr(class_name, ptr) \
+    new MyPiccolo::Reflection::ReflectionInstance(MyPiccolo::Reflection::TypeMeta::newMetaFromName(#class_name), (class_name*)ptr)
 
     // is_safely_castable<T,U>表示: 是否能够安全的将T类型转换为U类型
     template<typename T, typename U, typename = void>
@@ -223,8 +223,10 @@ namespace MyPiccolo {
         /* 反射类实例 */
         class ReflectionInstance {
         public:
-            ReflectionInstance(TypeMeta meta, void* instance) : m_meta(meta), m_instance(instance) {}
-            ReflectionInstance() : m_meta(), m_instance(nullptr) {}
+            ReflectionInstance(TypeMeta meta, void* instance) :
+                m_meta(meta), m_instance(instance) {}
+            ReflectionInstance() :
+                m_meta(), m_instance(nullptr) {}
 
             ReflectionInstance& operator=(ReflectionInstance& dest);
 
@@ -243,9 +245,12 @@ namespace MyPiccolo {
 
         public:
             /* 构造函数 */
-            ReflectionPtr(std::string type_name, T* instance) : m_type_name(type_name), m_instance(instance) {}
-            ReflectionPtr() : m_type_name(), m_instance(nullptr) {}
-            ReflectionPtr(const ReflectionPtr& dest) : m_type_name(dest.m_type_name), m_instance(dest.m_instance) {}
+            ReflectionPtr(std::string type_name, T* instance) :
+                m_type_name(type_name), m_instance(instance) {}
+            ReflectionPtr() :
+                m_type_name(), m_instance(nullptr) {}
+            ReflectionPtr(const ReflectionPtr& dest) :
+                m_type_name(dest.m_type_name), m_instance(dest.m_instance) {}
 
             /* 赋值 */
             template<typename U>
