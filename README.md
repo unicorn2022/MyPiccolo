@@ -12,6 +12,8 @@ cmake --build build --config Release
 
 # 实现的功能
 
+## 零、反射机制：`source/meta_parser`
+
 ## 一、平台层：`runtime/platform`
 
 基于`<filesystem>`，实现对文件路径的处理
@@ -34,27 +36,36 @@ cmake --build build --config Release
 
 - `/math`：数学库
 
+  - `axis_aligned.h`：轴对齐包围盒，实现了
+    - 基于中心&半径的更新、添加一个新的点
   - `/math.h`：对两种角度与一个通用类的封装，实现了
     - 弧度`Radian`、角度`Angle`、度数`Degree`三种类的实现与转换
     - 四则运算、三角函数的封装
-  - `/random.h`：对随机数生成器的封装，实现了
-    - 平均分布、伯努利分布、正态分布
-    - 对数组的每个元素生成一个随机数
-  - `/vector2~4.h`：对向量的封装，实现了
+  - `/matrix3.h`：对矩阵的封装，实现了 <font color="red">[待细看]</font>
     - 四则运算
-    - 点乘、叉乘、长度、归一化、中点、clamp
-    - 线性插值、向平面投影、两向量之间的夹角、旋转到dest的最短四元数
-  - `/matrix3.h`：对矩阵的封装，实现了
-    - 四则运算、与数组的转换
+    - 与数组的转换
     - 转置、求逆、行列式
     - QDU分解、旋转矩阵<=>绕轴旋转角度、缩放矩阵
-  - `/matrix4.h`：齐次坐标矩阵，实现了
-    - 
-  - `/quaternion.h`：四元数，实现了
+  - `/matrix4.h`：齐次坐标矩阵，实现了 <font color="red">[待细看]</font>
+    - 四则运算
+    - 与数组、三维矩阵、四元数的转换
+    - 转置、余子式、共轭、行列式、逆矩阵
+    - 平移变换、缩放变换、transform变换、仿射变换
+    - 构建viewport、镜像、旋转矩阵
+  - `/quaternion.h`：四元数，实现了 <font color="red">[待细看]</font>
     - 四则运算
     - 与旋转矩阵、绕轴旋转、局部坐标系的转换
     - 点乘、长度、归一化、求逆、共轭、转化成欧拉角
     - 插值计算：sLerp、nLerp
+  - `/random.h`：对随机数生成器的封装，实现了
+    - 平均分布、伯努利分布、正态分布
+    - 对数组的每个元素生成一个随机数
+  - `transform.h`：对Transform变换的封装，实现了
+    - 位置、缩放、旋转 => 模型变换矩阵
+  - `/vector2~4.h`：对向量的封装，实现了
+    - 四则运算
+    - 点乘、叉乘、长度、归一化、中点、clamp
+    - 线性插值、向平面投影、两向量之间的夹角、旋转到dest的最短四元数 <font color="red">[待细看]</font>
 
 - `/meta`：
 
@@ -97,5 +108,6 @@ cmake --build build --config Release
 
     - 实现了基础类型的偏特化：char、int、unsigned int、float、double、bool、string
 
-- 
+## 三、资源层：`runtime/resource`
 
+## 四、功能层：`runtime/function`

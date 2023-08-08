@@ -654,9 +654,9 @@ namespace MyPiccolo {
         }
 
         /* transform变换 */
-        // 4x4矩阵 => transform变换
+        // transform变换 => 4x4矩阵
         void makeTransform(const Vector3& position, const Vector3& scale, const Quaternion& orientation);
-        // 4x4矩阵 => transform逆变换
+        // transform逆变换 => 4x4矩阵
         void makeInverseTransform(const Vector3& position, const Vector3& scale, const Quaternion& orientation);
         // 4x4矩阵 => transform变换
         void decomposition(Vector3& position, Vector3& scale, Quaternion& orientation) const;

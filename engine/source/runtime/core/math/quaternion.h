@@ -12,7 +12,7 @@ namespace MyPiccolo {
     REFLECTION_TYPE(Quaternion)
     CLASS(Quaternion, Fields)
     {
-        REFLECTABLE_CLASS(Quaternion)
+        REFLECTION_BODY(Quaternion)
 
     public:
         float w {1.f}, x {0.f}, y {0.f}, z {0.f};
@@ -139,11 +139,11 @@ namespace MyPiccolo {
          *        但是nLerp不能保证角速度恒定
          */
         static Quaternion nLerp(float t, const Quaternion& kp, const Quaternion& kq, bool shortest_path = false);
+
+        // 特殊四元数
+        static const Quaternion ZERO;
+        static const Quaternion IDENTITY;
+
+        static const float k_epsilon;
     };
-
-    // 特殊四元数
-    static const Quaternion ZERO;
-    static const Quaternion IDENTITY;
-
-    static const float k_epsilon;
 } // namespace MyPiccolo
