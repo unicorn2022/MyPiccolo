@@ -1,4 +1,7 @@
+[TOC]
+
 # MyPiccolo
+
 本项目基于GAMES104的Piccolo引擎进行开发，首先进行引擎的复现，之后会逐步增加一些渲染方面的新功能
 
 # 编译方式
@@ -10,9 +13,7 @@ cmake --build build --config Release
 
 或者直接运行`build_windows.bat`
 
-# 实现的功能
-
-## 零、反射机制：`source/meta_parser`
+# 引擎的运行时架构
 
 ## 一、平台层：`runtime/platform`
 
@@ -110,4 +111,54 @@ cmake --build build --config Release
 
 ## 三、资源层：`runtime/resource`
 
+资产加载、保存功能，资产的结构化数据定义、相关路径配置
+
+- `/asset_manager`：
+- `/config_manager`：
+- `/res_type`：
+  - `/common`：
+  - `/components`：
+  - `/data`：
+  - `/global`：
+
 ## 四、功能层：`runtime/function`
+
+提供引擎功能模块，分为框架和子系统两部分
+
+### 4.1	框架：`runtime/function/framework`
+
+运行时功能核心框架：核心框架采用世界 `world` -关卡 `level` -GO `object` -组件 `component` 的层级架构
+
+>  `world_manager` 负责管理世界的加载、卸载、保存，和tick下属当前关卡
+>
+> 关卡 `level` 负责加载、卸载、保存关卡。同时关卡也管理下属GO的tick、创建和删除
+>
+> 游戏对象 `object` 负责加载、保存GO。同时GO也管理下属组件
+>
+> 组件全都继承自 `component.h` 中的 `Component` 类，
+
+- `/component`：功能组件
+  - `/animation`：动画
+  - `/camera`：相机
+  - `/mesh`：网格
+  - `/motor`：运动
+  - `/particle`：粒子
+  - `/rigidbody`：刚体
+  - `/transform`：变换
+- `/level`：关卡
+- `/object`：游戏对象
+- `/world`：世界管理器
+
+### 4.2	子系统：`runtime/function/`
+
+在具体GO组件的功能之外，运行时功能层其他子系统
+
+-  `/animation`：动画
+- `/character`：角色
+- `/controller`：控制器
+- `/global`：全局上下文
+- `/input`：输入
+- `/particle`：粒子
+- `/physics`：物理
+- `/render`：渲染
+- `/ui`：UI
