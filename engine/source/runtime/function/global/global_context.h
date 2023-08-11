@@ -3,8 +3,7 @@
 #include <memory>
 #include <string>
 
-namespace Piccolo
-{
+namespace Piccolo {
     class LogSystem;
     class InputSystem;
     class PhysicsManager;
@@ -21,8 +20,7 @@ namespace Piccolo
     struct EngineInitParams;
 
     /// Manage the lifetime and creation/destruction order of all global system
-    class RuntimeGlobalContext
-    {
+    class RuntimeGlobalContext {
     public:
         // create all global systems and initialize these systems
         void startSystems(const std::string& config_file_path);

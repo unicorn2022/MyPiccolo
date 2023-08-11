@@ -111,15 +111,33 @@ cmake --build build --config Release
 
 ## 三、资源层：`runtime/resource`
 
-资产加载、保存功能，资产的结构化数据定义、相关路径配置
-
-- `/asset_manager`：
-- `/config_manager`：
-- `/res_type`：
+- `/asset_manager`：资产加载、保存功能【json格式】
+- `/config_manager`：相关路径配置
+- `/res_type`：资产的结构化数据定义
   - `/common`：
+    - `/level.h`：关卡信息
+    - `/object.h`：场景中物体的基本属性
+    - `/world.h`：游戏世界的相关属性
   - `/components`：
+    - `/animation.h`：动画组件数据
+    - `/camera.h`：相机组件数据
+    - `/emitter.h`：粒子组件数据
+    - `/mesh.h`：网格体组件数据
+    - `/motor.h`：运动组件数据
+    - `/rigid_body.h`：刚体组件数据
   - `/data`：
+    - `/animation_clip.h`：动画数据
+    - `/animation_skeleton_node_map.h`：动画骨骼节点映射数据
+    - `/basic_shape.h`：基础形状数据
+    - `/blend_state.h`：混合空间数据
+    - `/camera_config.h`：相机配置
+    - `/material.h`：材质信息
+    - `/mesh_data.h`：网格体数据
+    - `/skeleton_data.h`：骨骼数据
+    - `/skeleton_mask.h`：骨骼遮罩数据
   - `/global`：
+    - `/global_particle.h`：全局粒子效果
+    - `/global_rendering.h`：全局渲染效果
 
 ## 四、功能层：`runtime/function`
 
