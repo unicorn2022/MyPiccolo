@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-namespace Piccolo {
+namespace MyPiccolo {
     class LogSystem;
     class InputSystem;
     class PhysicsManager;
@@ -43,4 +43,4 @@ namespace Piccolo {
     };
 
     extern RuntimeGlobalContext g_runtime_global_context;
-} // namespace Piccolo
+} // namespace MyPiccolo

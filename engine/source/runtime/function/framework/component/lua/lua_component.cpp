@@ -2,7 +2,7 @@
 #include "runtime/function/framework/component/lua/lua_component.h"
 #include "runtime/core/base/macro.h"
 
-namespace Piccolo
+namespace MyPiccolo
 {
     void LuaComponent::postLoadResource(std::weak_ptr<GObject> parent_object)
     {
@@ -15,4 +15,4 @@ namespace Piccolo
         // LOG_INFO(m_lua_script);
         // m_lua_state.script(m_lua_script);
     }
-} // namespace Piccolo
+} // namespace MyPiccolo

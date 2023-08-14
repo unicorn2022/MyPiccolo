@@ -172,11 +172,20 @@ cmake --build build --config Release
 在具体GO组件的功能之外，运行时功能层其他子系统
 
 -  `/animation`：动画
-- `/character`：角色
-- `/controller`：控制器
-- `/global`：全局上下文
-- `/input`：输入
-- `/particle`：粒子
-- `/physics`：物理
-- `/render`：渲染
-- `/ui`：UI
+   -  `/utilities.h`：工具函数，主要是骨骼节点的搜索
+   -  `/node.h`：单个骨骼节点，实现了
+      -  在三种空间内的平移、旋转、缩放
+      -  更新局部空间 => 模型空间的变换矩阵
+   -  `/skeleton.h`：角色骨骼树，实现了
+      -  通过骨骼数据，构建骨骼树
+      -  通过混合状态数据，将动画数据应用到骨骼树上
+      -  输出动画计算结果
+   -  `/animation_loader.h`：动画资产的加载
+-  `/character`：角色
+-  `/controller`：控制器
+-  `/global`：全局上下文
+-  `/input`：输入
+-  `/particle`：粒子
+-  `/physics`：物理
+-  `/render`：渲染
+-  `/ui`：UI
