@@ -7,6 +7,7 @@
 #include <vector>
 
 namespace MyPiccolo {
+    /* 单个动画节点对应的骨骼节点&变换矩阵 */
     REFLECTION_TYPE(AnimationResultElement)
     CLASS(AnimationResultElement, WhiteListFields)
     {
@@ -17,15 +18,17 @@ namespace MyPiccolo {
         Matrix4x4_ transform; // 变换矩阵
     };
 
+    /* 某一帧计算出的动画结果 */
     REFLECTION_TYPE(AnimationResult)
     CLASS(AnimationResult, Fields)
     {
         REFLECTION_BODY(AnimationResult)
 
     public:
-        std::vector<AnimationResultElement> node; // 动画节点
+        std::vector<AnimationResultElement> node; // index => 骨骼节点&变换矩阵
     };
 
+    /* 动画组件资源 */
     REFLECTION_TYPE(AnimationComponentRes)
     CLASS(AnimationComponentRes, Fields)
     {

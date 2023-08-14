@@ -7,6 +7,7 @@
 #include <vector>
 
 namespace MyPiccolo {
+    /* index => 骨骼节点名称 */
     REFLECTION_TYPE(AnimNodeMap)
     CLASS(AnimNodeMap, Fields)
     {
@@ -16,6 +17,7 @@ namespace MyPiccolo {
         std::vector<std::string> convert;
     };
 
+    /* 动画通道数据 */
     REFLECTION_TYPE(AnimationChannel)
     CLASS(AnimationChannel, Fields)
     {
@@ -23,11 +25,12 @@ namespace MyPiccolo {
 
     public:
         std::string             name;          // 动画通道名称
-        std::vector<Vector3>    position_keys; // 位置关键帧
-        std::vector<Quaternion> rotation_keys; // 旋转关键帧
-        std::vector<Vector3>    scaling_keys;  // 缩放关键帧
+        std::vector<Vector3>    position_keys; // 关键帧: 位置
+        std::vector<Quaternion> rotation_keys; // 关键帧: 旋转
+        std::vector<Vector3>    scaling_keys;  // 关键帧: 缩放
     };
 
+    /* clip 数据 */
     REFLECTION_TYPE(AnimationClip)
     CLASS(AnimationClip, Fields)
     {
@@ -39,14 +42,15 @@ namespace MyPiccolo {
         std::vector<AnimationChannel> node_channels;   // 动画通道
     };
 
+    /* 动画资产 */
     REFLECTION_TYPE(AnimationAsset)
     CLASS(AnimationAsset, Fields)
     {
         REFLECTION_BODY(AnimationAsset);
 
     public:
-        AnimNodeMap   node_map;          // 动画节点映射
-        AnimationClip clip_data;         // 动画剪辑数据
+        AnimNodeMap   node_map;          // index => 骨骼节点名称
+        AnimationClip clip_data;         // clip 数据
         std::string   skelton_file_path; // 骨骼文件路径
     };
 } // namespace MyPiccolo
