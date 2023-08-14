@@ -181,6 +181,7 @@ cmake --build build --config Release
       -  通过混合状态数据，将动画数据应用到骨骼树上
       -  输出动画计算结果
    -  `/animation_loader.h`：动画资产的加载
+   -  `/animation_system.h`：动画系统管理
 -  `/character`：角色
 -  `/controller`：控制器
 -  `/global`：全局上下文
