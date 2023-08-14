@@ -7,14 +7,14 @@
 #include <vector>
 
 namespace MyPiccolo {
-    /* index => 骨骼节点名称 */
+    /* 动画节点映射 */
     REFLECTION_TYPE(AnimNodeMap)
     CLASS(AnimNodeMap, Fields)
     {
         REFLECTION_BODY(AnimNodeMap);
 
     public:
-        std::vector<std::string> convert;
+        std::vector<std::string> convert; // index => 骨骼节点名称
     };
 
     /* 动画通道数据 */

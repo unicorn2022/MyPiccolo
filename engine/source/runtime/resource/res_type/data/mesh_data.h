@@ -6,7 +6,7 @@
 #include <vector>
 
 namespace MyPiccolo {
-
+    /* 顶点数据 */
     REFLECTION_TYPE(Vertex)
     CLASS(Vertex, Fields)
     {
@@ -19,6 +19,7 @@ namespace MyPiccolo {
         float u, v;       // 纹理坐标
     };
 
+    /* 顶点绑定骨骼节点 */
     REFLECTION_TYPE(SkeletonBinding)
     CLASS(SkeletonBinding, Fields)
     {
@@ -29,6 +30,7 @@ namespace MyPiccolo {
         float weight0, weight1, weight2, weight3; // 骨骼权重
     };
 
+    /* 网格体数据 */
     REFLECTION_TYPE(MeshData)
     CLASS(MeshData, Fields)
     {
