@@ -12,7 +12,7 @@
 #include <unordered_set>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
 
 /* 属性描述宏 */
 // 定义__REFLECTION_PARSER__时, 使用META(), CLASS(), STRUCT()宏表示需要被反射的 字段/类/结构体
@@ -54,20 +54,20 @@ namespace MyPiccolo {
 
 /* 反射指针 */
 // new
-#define MyPICCOLO_REFLECTION_NEW(name, ...) Reflection::ReflectionPtr(#name, new name(__VA_ARGS__));
+#define PICCOLO_REFLECTION_NEW(name, ...) Reflection::ReflectionPtr(#name, new name(__VA_ARGS__));
 // delete
-#define MyPICCOLO_REFLECTION_DELETE(value) \
+#define PICCOLO_REFLECTION_DELETE(value) \
     if (value) {                           \
         delete value.operator->();         \
         value.getPtrReference() = nullptr; \
     }
 // deep copy
-#define MyPICCOLO_REFLECTION_DEEP_COPY(type, dst_ptr, src_ptr) *static_cast<type*>(dst_ptr) = *static_cast<type*>(src_ptr.getPtr());
+#define PICCOLO_REFLECTION_DEEP_COPY(type, dst_ptr, src_ptr) *static_cast<type*>(dst_ptr) = *static_cast<type*>(src_ptr.getPtr());
 
 /* Meta定义 */
-#define TypeMetaDef(class_name, ptr) MyPiccolo::Reflection::ReflectionInstance(MyPiccolo::Reflection::TypeMeta::newMetaFromName(#class_name), (class_name*)ptr)
+#define TypeMetaDef(class_name, ptr) Piccolo::Reflection::ReflectionInstance(Piccolo::Reflection::TypeMeta::newMetaFromName(#class_name), (class_name*)ptr)
 #define TypeMetaDefPtr(class_name, ptr) \
-    new MyPiccolo::Reflection::ReflectionInstance(MyPiccolo::Reflection::TypeMeta::newMetaFromName(#class_name), (class_name*)ptr)
+    new Piccolo::Reflection::ReflectionInstance(Piccolo::Reflection::TypeMeta::newMetaFromName(#class_name), (class_name*)ptr)
 
     // is_safely_castable<T,U>表示: 是否能够安全的将T类型转换为U类型
     template<typename T, typename U, typename = void>
@@ -329,4 +329,4 @@ namespace MyPiccolo {
         };
     } // namespace Reflection
 
-} // namespace MyPiccolo
+} // namespace Piccolo

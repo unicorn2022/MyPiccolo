@@ -3,7 +3,7 @@
 #include "runtime/core/math/vector3.h"
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(Geometry)
     CLASS(Geometry, Fields)
     {
@@ -49,4 +49,4 @@ namespace MyPiccolo {
         float m_radius {0.3f};      // 胶囊体半径
         float m_half_height {0.7f}; // 胶囊体半高
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

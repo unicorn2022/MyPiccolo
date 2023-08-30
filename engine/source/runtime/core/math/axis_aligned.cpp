@@ -1,6 +1,6 @@
 #include "runtime/core/math/axis_aligned.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     AxisAlignedBox::AxisAlignedBox(const Vector3& center, const Vector3& half_extent) { update(center, half_extent); }
 
     void AxisAlignedBox::merge(const Vector3& new_point) {
@@ -18,4 +18,4 @@ namespace MyPiccolo {
         m_max_corner  = center + half_extent;
     }
 
-} // namespace MyPiccolo
+} // namespace Piccolo

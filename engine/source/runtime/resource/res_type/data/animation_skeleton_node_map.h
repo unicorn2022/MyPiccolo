@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
 
     /* 骨骼节点映射 */
     REFLECTION_TYPE(AnimSkelMap)
@@ -16,4 +16,4 @@ namespace MyPiccolo {
     public:
         std::vector<int> convert; // index => 骨骼节点编号
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

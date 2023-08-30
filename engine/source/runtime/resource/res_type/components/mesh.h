@@ -3,7 +3,7 @@
 #include "runtime/core/math/transform.h"
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(SubMeshRes)
     CLASS(SubMeshRes, Fields)
     {
@@ -23,4 +23,4 @@ namespace MyPiccolo {
     public:
         std::vector<SubMeshRes> m_sub_meshes; // 子网格
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

@@ -5,7 +5,7 @@
 #include "runtime/core/math/vector4.h"
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(ParticleComponentRes)
     CLASS(ParticleComponentRes, Fields)
     {
@@ -21,4 +21,4 @@ namespace MyPiccolo {
         Vector2    m_life;              // 生命周期
         Vector4    m_color;             // 基础颜色
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

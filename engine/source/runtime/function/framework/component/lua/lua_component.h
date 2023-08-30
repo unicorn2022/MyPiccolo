@@ -2,7 +2,7 @@
 #include "sol/sol.hpp"
 #include "runtime/function/framework/component/component.h"
 
-namespace MyPiccolo
+namespace Piccolo
 {
     REFLECTION_TYPE(LuaComponent)
     CLASS(LuaComponent : public Component, WhiteListFields)
@@ -21,4 +21,4 @@ namespace MyPiccolo
         META(Enable)
         std::string m_lua_script;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

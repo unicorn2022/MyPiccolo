@@ -2,7 +2,7 @@
 
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(MaterialRes)
     CLASS(MaterialRes, Fields)
     {
@@ -15,4 +15,4 @@ namespace MyPiccolo {
         std::string m_occlusion_texture_file;          // 遮挡贴图
         std::string m_emissive_texture_file;           // 自发光贴图
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

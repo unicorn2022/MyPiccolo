@@ -7,7 +7,7 @@
 
 #include "runtime/resource/res_type/data/camera_config.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(SkyBoxIrradianceMap)
     CLASS(SkyBoxIrradianceMap, Fields)
     {
@@ -64,4 +64,4 @@ namespace MyPiccolo {
         DirectionalLight m_directional_light; // 定向光源
     };
 
-} // namespace MyPiccolo
+} // namespace Piccolo

@@ -5,7 +5,7 @@
 #include "runtime/function/animation/animation_loader.h"
 #include "runtime/function/animation/skeleton.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     std::map<std::string, std::shared_ptr<SkeletonData>>  AnimationManager::m_skeleton_definition_cache;    // 骨骼数据缓存
     std::map<std::string, std::shared_ptr<AnimationClip>> AnimationManager::m_animation_data_cache;         // 动画数据缓存
     std::map<std::string, std::shared_ptr<AnimSkelMap>>   AnimationManager::m_animation_skeleton_map_cache; // 动画骨骼映射缓存
@@ -144,4 +144,4 @@ namespace MyPiccolo {
         return blend_state_with_clip_data;
     }
 
-} // namespace MyPiccolo
+} // namespace Piccolo

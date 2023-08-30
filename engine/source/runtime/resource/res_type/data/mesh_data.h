@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 顶点数据 */
     REFLECTION_TYPE(Vertex)
     CLASS(Vertex, Fields)
@@ -41,4 +41,4 @@ namespace MyPiccolo {
         std::vector<int>             index_buffer;  // 索引缓冲
         std::vector<SkeletonBinding> bind;          // 骨骼绑定
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

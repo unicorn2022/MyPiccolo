@@ -2,7 +2,7 @@
 
 using namespace std;
 
-namespace MyPiccolo{
+namespace Piccolo{
 
 std::vector<std::filesystem::path> FileSystem::getFiles(const std::filesystem::path& directory){
     
@@ -17,4 +17,4 @@ std::vector<std::filesystem::path> FileSystem::getFiles(const std::filesystem::p
     return files;
 }
 
-} // namespace MyPiccolo
+} // namespace Piccolo

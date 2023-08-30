@@ -10,7 +10,7 @@
 #include <memory>
 #include <string>
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* RHI 类型定义 */
 #define RHI_MAX_EXTENSION_NAME_SIZE 256U
 #define RHI_MAX_DESCRIPTION_SIZE 256U
@@ -1788,15 +1788,15 @@ namespace MyPiccolo {
     typedef uint64_t RHIDeviceSize;
     typedef uint32_t RHIFlags;
     typedef uint32_t RHISampleMask;
-} // namespace MyPiccolo
+} // namespace Piccolo
 
-namespace MyPiccolo {
+namespace Piccolo {
     /**
      * @brief 纹理格式: unknown, 2D
      */
-    enum class MyPICCOLO_IMAGE_TYPE : uint8_t {
-        MyPICCOLO_IMAGE_TYPE_UNKNOWN = 0,
-        MyPICCOLO_IMAGE_TYPE_2D
+    enum class PICCOLO_IMAGE_TYPE : uint8_t {
+        PICCOLO_IMAGE_TYPE_UNKNOWN = 0,
+        PICCOLO_IMAGE_TYPE_2D
     };
 
     /**
@@ -1852,7 +1852,7 @@ namespace MyPiccolo {
         void*    m_pixels {nullptr}; // 数据指针
 
         RHIFormat            m_format = RHI_FORMAT_MAX_ENUM;
-        MyPICCOLO_IMAGE_TYPE m_type {MyPICCOLO_IMAGE_TYPE::MyPICCOLO_IMAGE_TYPE_UNKNOWN};
+        PICCOLO_IMAGE_TYPE m_type {PICCOLO_IMAGE_TYPE::PICCOLO_IMAGE_TYPE_UNKNOWN};
 
         TextureData() = default;
         ~TextureData() {
@@ -1975,13 +1975,13 @@ namespace MyPiccolo {
         std::shared_ptr<TextureData> m_occlusion_texture;          // 遮挡贴图
         std::shared_ptr<TextureData> m_emissive_texture;           // 自发光贴图
     };
-} // namespace MyPiccolo
+} // namespace Piccolo
 
 template<>
-struct std::hash<MyPiccolo::MeshSourceDesc> {
-    size_t operator()(const MyPiccolo::MeshSourceDesc& rhs) const noexcept { return rhs.getHashValue(); }
+struct std::hash<Piccolo::MeshSourceDesc> {
+    size_t operator()(const Piccolo::MeshSourceDesc& rhs) const noexcept { return rhs.getHashValue(); }
 };
 template<>
-struct std::hash<MyPiccolo::MaterialSourceDesc> {
-    size_t operator()(const MyPiccolo::MaterialSourceDesc& rhs) const noexcept { return rhs.getHashValue(); }
+struct std::hash<Piccolo::MaterialSourceDesc> {
+    size_t operator()(const Piccolo::MaterialSourceDesc& rhs) const noexcept { return rhs.getHashValue(); }
 };

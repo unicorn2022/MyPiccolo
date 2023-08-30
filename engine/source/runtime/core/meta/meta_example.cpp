@@ -6,7 +6,7 @@
 
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* Fields：整个类的所有成员变量均需要反射 */
     REFLECTION_TYPE(BaseTest)
     CLASS(BaseTest, Fields)
@@ -38,4 +38,4 @@ namespace MyPiccolo {
     public:
         std::vector<Reflection::ReflectionPtr<BaseTest>> m_test_base_array;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

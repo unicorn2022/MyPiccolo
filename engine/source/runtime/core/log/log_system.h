@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <stdexcept>
 
-namespace MyPiccolo{
+namespace Piccolo{
 
 /**
  * @brief 日志系统

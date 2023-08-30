@@ -6,7 +6,7 @@
 
 #include <cassert>
 
-namespace MyPiccolo {
+namespace Piccolo {
     // Vector3需要被反射
     REFLECTION_TYPE(Vector3)
     CLASS(Vector3, Fields)
@@ -280,4 +280,4 @@ namespace MyPiccolo {
         static const Vector3 NEGATIVE_UNIT_Z;
         static const Vector3 UNIT_SCALE;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

@@ -1,6 +1,6 @@
 #include "serializer.h"
 #include <assert.h>
-namespace MyPiccolo {
+namespace Piccolo {
     /* 序列化&反序列化：对 PJson 进行偏特化 */
     // 实例写入PJson: char
     template<>
@@ -85,4 +85,4 @@ namespace MyPiccolo {
         assert(json_context.is_string());
         return instance = json_context.string_value();
     }
-} // namespace MyPiccolo
+} // namespace Piccolo

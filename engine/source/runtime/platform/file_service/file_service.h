@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <vector>
 
-namespace MyPiccolo{
+namespace Piccolo{
 
 /**
  * @brief 文件服务

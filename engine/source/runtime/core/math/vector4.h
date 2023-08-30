@@ -4,7 +4,7 @@
 #include "runtime/core/math/vector3.h"
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     // Vector4需要被反射
     REFLECTION_TYPE(Vector4)
     CLASS(Vector4, Fields)
@@ -150,4 +150,4 @@ namespace MyPiccolo {
         static const Vector4 UNIT_SCALE;
     };
 
-} // namespace MyPiccolo
+} // namespace Piccolo

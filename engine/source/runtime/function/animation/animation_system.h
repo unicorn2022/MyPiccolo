@@ -10,7 +10,7 @@
 #include <memory>
 #include <string>
 
-namespace MyPiccolo {
+namespace Piccolo {
     class AnimationManager {
     private:
         static std::map<std::string, std::shared_ptr<SkeletonData>>  m_skeleton_definition_cache;    // 骨骼数据缓存
@@ -32,4 +32,4 @@ namespace MyPiccolo {
 
         AnimationManager() = default;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

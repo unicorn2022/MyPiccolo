@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 骨骼节点数据 */
     REFLECTION_TYPE(RawBone)
     CLASS(RawBone, Fields)
@@ -33,4 +33,4 @@ namespace MyPiccolo {
         int                  root_index;                   // 根骨骼索引
         bool                 in_topological_order = false; // 是否已经按照拓扑排序
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

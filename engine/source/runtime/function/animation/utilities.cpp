@@ -2,7 +2,7 @@
 
 #include "runtime/function/animation/node.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     /**
      * @brief 通过下标查找骨骼
      * @param bones 骨骼数组
@@ -58,4 +58,4 @@ namespace MyPiccolo {
             return std::numeric_limits<int>::max();
     }
 
-} // namespace MyPiccolo
+} // namespace Piccolo

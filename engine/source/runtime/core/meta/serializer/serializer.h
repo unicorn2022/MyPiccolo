@@ -9,7 +9,7 @@
 
 #include <cassert>
 
-namespace MyPiccolo {
+namespace Piccolo {
     template<typename...>
     inline constexpr bool always_false = false;
 
@@ -134,4 +134,4 @@ namespace MyPiccolo {
     template<>
     std::string& PSerializer::read(const PJson& json_context, std::string& instance);
 
-} // namespace MyPiccolo
+} // namespace Piccolo

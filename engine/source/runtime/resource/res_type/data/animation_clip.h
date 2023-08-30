@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 动画节点映射 */
     REFLECTION_TYPE(AnimNodeMap)
     CLASS(AnimNodeMap, Fields)
@@ -53,4 +53,4 @@ namespace MyPiccolo {
         AnimationClip clip_data;         // clip 数据
         std::string   skelton_file_path; // 骨骼文件路径
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

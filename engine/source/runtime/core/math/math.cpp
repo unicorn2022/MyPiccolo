@@ -1,7 +1,7 @@
 #include "runtime/core/math/math.h"
 #include "runtime/core/math/matrix4.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     Math::AngleUnit Math::k_AngleUnit;
 
     // 默认角度单位为 degree
@@ -225,4 +225,4 @@ namespace MyPiccolo {
         return proj_matrix;
     }
 
-} // namespace MyPiccolo
+} // namespace Piccolo

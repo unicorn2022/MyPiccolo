@@ -2,7 +2,7 @@
 #include <cstring>
 #include <map>
 
-namespace MyPiccolo {
+namespace Piccolo {
     namespace Reflection {
         const char* k_unknown_type = "UnknownType";
         const char* k_unknown      = "Unknown";
@@ -258,4 +258,4 @@ namespace MyPiccolo {
         }
     } // namespace Reflection
 
-} // namespace MyPiccolo
+} // namespace Piccolo

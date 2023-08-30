@@ -12,4 +12,4 @@
 #include "runtime/core/math/vector3.h"
 #include "runtime/core/math/vector4.h"
 
-namespace MyPiccolo {} // namespace MyPiccolo
+namespace Piccolo {} // namespace Piccolo

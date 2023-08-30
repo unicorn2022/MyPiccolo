@@ -6,7 +6,7 @@
 #include "runtime/core/math/vector3.h"
 #include "runtime/core/math/vector4.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     // 封装了一个标准的4x4齐次坐标矩阵
     REFLECTION_TYPE(Matrix4x4_)
     CLASS(Matrix4x4_, Fields)
@@ -734,4 +734,4 @@ namespace MyPiccolo {
     };
 
     Vector4 operator*(const Vector4& v, const Matrix4x4& mat);
-} // namespace MyPiccolo
+} // namespace Piccolo

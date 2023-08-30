@@ -2,7 +2,7 @@
 
 #include "runtime/core/math/math.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     //---------------------------------------------------------------------
     void Node::setParent(Node* parent) {
         m_parent = parent;
@@ -196,4 +196,4 @@ namespace MyPiccolo {
 
         return std::numeric_limits<size_t>().max();
     }
-} // namespace MyPiccolo
+} // namespace Piccolo

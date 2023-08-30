@@ -5,7 +5,7 @@
 
 #include <cassert>
 
-namespace MyPiccolo {
+namespace Piccolo {
     class Matrix3x3;
     class Vector3;
 
@@ -146,4 +146,4 @@ namespace MyPiccolo {
 
         static const float k_epsilon;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

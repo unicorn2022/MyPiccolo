@@ -8,7 +8,7 @@
 #include <memory>
 #include <string>
 
-namespace MyPiccolo {
+namespace Piccolo {
     class AnimationLoader {
     public:
         // 加载动画clip
@@ -20,4 +20,4 @@ namespace MyPiccolo {
         // 加载骨骼节点遮罩
         std::shared_ptr<BoneBlendMask> loadSkeletonMask(std::string skeleton_mask_file_url);
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

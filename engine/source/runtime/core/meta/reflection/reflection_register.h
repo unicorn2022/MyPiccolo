@@ -4,7 +4,7 @@
  */
 
 #pragma once
-namespace MyPiccolo {
+namespace Piccolo {
     namespace Reflection {
         class TypeMetaRegister {
         public:
@@ -12,4 +12,4 @@ namespace MyPiccolo {
             static void Unregister();
         };
     } // namespace Reflection
-} // namespace MyPiccolo
+} // namespace Piccolo

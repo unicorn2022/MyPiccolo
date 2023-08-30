@@ -6,7 +6,7 @@
 
 #include "runtime/resource/res_type/common/object.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(LevelRes)
     CLASS(LevelRes, Fields)
     {
@@ -18,4 +18,4 @@ namespace MyPiccolo {
 
         std::vector<ObjectInstanceRes> m_objects;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

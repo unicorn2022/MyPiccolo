@@ -5,7 +5,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-namespace MyPiccolo{
+namespace Piccolo{
 
 LogSystem::LogSystem(){
     // 初始化spdlog终端日志记录器

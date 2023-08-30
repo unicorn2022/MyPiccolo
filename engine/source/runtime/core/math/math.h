@@ -9,7 +9,7 @@
 // 比较浮点数是否相等
 #define CMP(x, y) (fabsf(x - y) < FLT_EPSILON * fmaxf(1.0f, fmaxf(fabsf(x), fabsf(y))))
 
-namespace MyPiccolo {
+namespace Piccolo {
     static const float Math_POS_INFINITY = std::numeric_limits<float>::infinity();  // 无穷大
     static const float Math_NEG_INFINITY = -std::numeric_limits<float>::infinity(); // 负无穷大
     static const float Math_PI           = 3.14159265358979323846264338327950288f;  // pi
@@ -329,4 +329,4 @@ namespace MyPiccolo {
     inline Angle::operator Radian() const { return Radian(Math::angleUnitsToRadians(m_angle)); }
     inline Angle::operator Degree() const { return Degree(Math::angleUnitsToDegrees(m_angle)); }
 
-} // namespace MyPiccolo
+} // namespace Piccolo

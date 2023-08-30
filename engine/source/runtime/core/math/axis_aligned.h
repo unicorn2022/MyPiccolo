@@ -4,7 +4,7 @@
 #include "runtime/core/meta/reflection/reflection.h"
 #include <limits>
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 轴对齐包围盒 */
     REFLECTION_TYPE(AxisAlignedBox)
     CLASS(AxisAlignedBox, Fields)
@@ -33,4 +33,4 @@ namespace MyPiccolo {
         Vector3 m_max_corner {
             -std::numeric_limits<float>::max(), -std::numeric_limits<float>::max(), -std::numeric_limits<float>::max()};
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

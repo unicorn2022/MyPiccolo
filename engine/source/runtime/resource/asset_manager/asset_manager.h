@@ -11,7 +11,7 @@
 
 #include "_generated/serializer/all_serializer.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     class AssetManager {
     public:
         /**
@@ -72,4 +72,4 @@ namespace MyPiccolo {
         }
         std::filesystem::path getFullPath(const std::string& relative_path) const;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

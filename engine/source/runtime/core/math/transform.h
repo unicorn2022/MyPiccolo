@@ -4,7 +4,7 @@
 #include "runtime/core/math/vector3.h"
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(Transform)
     CLASS(Transform, Fields)
     {
@@ -26,4 +26,4 @@ namespace MyPiccolo {
             return temp;
         }
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

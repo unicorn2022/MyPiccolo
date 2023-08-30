@@ -4,7 +4,7 @@
 #include "runtime/core/meta/reflection/reflection.h"
 #include "runtime/resource/res_type/data/basic_shape.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 控制器类型 */
     enum class ControllerType : unsigned char {
         none,    // 无
@@ -54,4 +54,4 @@ namespace MyPiccolo {
 
         Reflection::ReflectionPtr<ControllerConfig> m_controller_config; // 控制器配置
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

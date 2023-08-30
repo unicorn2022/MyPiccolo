@@ -9,7 +9,7 @@
 
 #include "_generated/serializer/all_serializer.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     namespace {
         /**
          * @brief 向 skeleton_data 中添加一个骨骼节点, 父节点为 parent_index
@@ -22,7 +22,7 @@ namespace MyPiccolo {
             raw_bone.index        = skeleton_data->bones_map.size();
             raw_bone.parent_index = parent_index;
 
-            std::shared_ptr<RawBone> bone_ptr = std::make_shared<MyPiccolo::RawBone>();
+            std::shared_ptr<RawBone> bone_ptr = std::make_shared<Piccolo::RawBone>();
             *bone_ptr                         = raw_bone;
 
             skeleton_data->bones_map.push_back(*bone_ptr);
@@ -77,27 +77,27 @@ namespace MyPiccolo {
     } // namespace
 
     // 加载动画clip
-    std::shared_ptr<MyPiccolo::AnimationClip> AnimationLoader::loadAnimationClipData(std::string animation_clip_url) {
+    std::shared_ptr<Piccolo::AnimationClip> AnimationLoader::loadAnimationClipData(std::string animation_clip_url) {
         AnimationAsset animation_clip;
         g_runtime_global_context.m_asset_manager->loadAsset(animation_clip_url, animation_clip);
-        return std::make_shared<MyPiccolo::AnimationClip>(animation_clip.clip_data);
+        return std::make_shared<Piccolo::AnimationClip>(animation_clip.clip_data);
     }
     // 加载骨骼数据
-    std::shared_ptr<MyPiccolo::SkeletonData> AnimationLoader::loadSkeletonData(std::string skeleton_data_url) {
+    std::shared_ptr<Piccolo::SkeletonData> AnimationLoader::loadSkeletonData(std::string skeleton_data_url) {
         SkeletonData data;
         g_runtime_global_context.m_asset_manager->loadAsset(skeleton_data_url, data);
-        return std::make_shared<MyPiccolo::SkeletonData>(data);
+        return std::make_shared<Piccolo::SkeletonData>(data);
     }
     // 加载骨骼节点映射
-    std::shared_ptr<MyPiccolo::AnimSkelMap> AnimationLoader::loadAnimSkelMap(std::string anim_skel_map_url) {
+    std::shared_ptr<Piccolo::AnimSkelMap> AnimationLoader::loadAnimSkelMap(std::string anim_skel_map_url) {
         AnimSkelMap data;
         g_runtime_global_context.m_asset_manager->loadAsset(anim_skel_map_url, data);
-        return std::make_shared<MyPiccolo::AnimSkelMap>(data);
+        return std::make_shared<Piccolo::AnimSkelMap>(data);
     }
     // 加载骨骼节点遮罩
-    std::shared_ptr<MyPiccolo::BoneBlendMask> AnimationLoader::loadSkeletonMask(std::string skeleton_mask_file_url) {
+    std::shared_ptr<Piccolo::BoneBlendMask> AnimationLoader::loadSkeletonMask(std::string skeleton_mask_file_url) {
         BoneBlendMask data;
         g_runtime_global_context.m_asset_manager->loadAsset(skeleton_mask_file_url, data);
-        return std::make_shared<MyPiccolo::BoneBlendMask>(data);
+        return std::make_shared<Piccolo::BoneBlendMask>(data);
     }
-} // namespace MyPiccolo
+} // namespace Piccolo

@@ -6,7 +6,7 @@
 #include <fstream>
 #include <string>
 
-namespace MyPiccolo {
+namespace Piccolo {
     void ConfigManager::initialize(const std::filesystem::path& config_file_path) {
         // 读取config
         std::ifstream config_file(config_file_path);
@@ -68,4 +68,4 @@ namespace MyPiccolo {
     const std::filesystem::path& ConfigManager::getJoltPhysicsAssetFolder() const { return m_jolt_physics_asset_folder; }
 #endif
 
-} // namespace MyPiccolo
+} // namespace Piccolo

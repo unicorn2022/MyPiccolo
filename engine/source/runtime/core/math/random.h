@@ -4,7 +4,7 @@
 #include <cfloat>
 #include <random>
 
-namespace MyPiccolo {
+namespace Piccolo {
     // 根据NumericType的类型, 定义 uniform_distribution 对应不同的分布
     template<typename NumericType>
     using uniform_distribution = typename std::conditional<std::is_integral<NumericType>::value,
@@ -101,4 +101,4 @@ namespace MyPiccolo {
 
     // 缺省随机数生成器, 使用std::mt19937引擎
     using DefaultRNG = RandomNumberGenerator<std::mt19937>;
-} // namespace MyPiccolo
+} // namespace Piccolo

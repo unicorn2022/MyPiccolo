@@ -4,7 +4,7 @@
 
 #include "runtime/function/animation/node.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     class SkeletonData;
     class BlendStateWithClipData;
 
@@ -39,4 +39,4 @@ namespace MyPiccolo {
         const Bone* getBones() const;
         int32_t     getBonesCount() const;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

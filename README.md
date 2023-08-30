@@ -1,6 +1,6 @@
 [TOC]
 
-# MyPiccolo
+# Piccolo
 
 本项目基于GAMES104的Piccolo引擎进行开发，首先进行引擎的复现，之后会逐步增加一些渲染方面的新功能
 

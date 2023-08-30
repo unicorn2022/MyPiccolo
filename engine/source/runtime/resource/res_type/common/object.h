@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
     class Component;
 
     // 组件定义资源
@@ -41,4 +41,4 @@ namespace MyPiccolo {
 
         std::vector<Reflection::ReflectionPtr<Component>> m_instanced_components;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
     class Bone;
     class RawBone;
     class SkeletonData;
@@ -44,4 +44,4 @@ namespace MyPiccolo {
      * @param name 骨骼名
     */
     int find_index_by_name(const SkeletonData& skeleton, const std::string& name);
-} // namespace MyPiccolo
+} // namespace Piccolo

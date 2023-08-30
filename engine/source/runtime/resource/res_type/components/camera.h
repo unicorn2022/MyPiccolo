@@ -3,7 +3,7 @@
 #include "runtime/core/math/quaternion.h"
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(CameraParameter)
     CLASS(CameraParameter, Fields)
     {
@@ -67,4 +67,4 @@ namespace MyPiccolo {
 
         ~CameraComponentRes();
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

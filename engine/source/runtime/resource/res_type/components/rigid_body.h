@@ -6,7 +6,7 @@
 #include "runtime/core/math/transform.h"
 #include "runtime/core/meta/reflection/reflection.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 刚体形状 */
     enum class RigidBodyShapeType : unsigned char {
         box,     // 立方体
@@ -49,4 +49,4 @@ namespace MyPiccolo {
         int                         m_actor_type;   // 角色类型
     };
 
-} // namespace MyPiccolo
+} // namespace Piccolo

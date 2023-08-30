@@ -2,7 +2,7 @@
 
 using namespace std;
 
-namespace MyPiccolo{
+namespace Piccolo{
 
 // 获取相对路径
 const std::filesystem::path Path::getRelativePath(const std::filesystem::path& directory, const std::filesystem::path& file_path){

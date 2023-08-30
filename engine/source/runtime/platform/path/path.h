@@ -5,7 +5,7 @@
 #include <tuple>
 #include <vector>
 
-namespace MyPiccolo{
+namespace Piccolo{
 
 /**
  * @brief 路径工具类

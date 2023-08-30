@@ -3,7 +3,7 @@
 
 #include "runtime/core/math/vector3.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(Color)
     CLASS(Color, Fields)
     {
@@ -16,4 +16,4 @@ namespace MyPiccolo {
 
         Vector3 toVector3() const { return Vector3(r, g, b); }
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

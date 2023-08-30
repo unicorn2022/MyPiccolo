@@ -3,7 +3,7 @@
 #include "runtime/core/math/matrix4.h"
 #include "runtime/core/math/vector3.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     const Quaternion Quaternion::ZERO(0, 0, 0, 0);
     const Quaternion Quaternion::IDENTITY(1, 0, 0, 0);
 
@@ -370,4 +370,4 @@ namespace MyPiccolo {
         result.normalise();
         return result;
     }
-} // namespace MyPiccolo
+} // namespace Piccolo

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
     REFLECTION_TYPE(WorldRes)
     CLASS(WorldRes, Fields)
     {
@@ -19,4 +19,4 @@ namespace MyPiccolo {
         // 默认关卡的url
         std::string m_default_level_url;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

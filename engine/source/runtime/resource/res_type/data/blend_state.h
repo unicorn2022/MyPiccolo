@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 当前动画的混合权重 */
     REFLECTION_TYPE(BoneBlendWeight)
     CLASS(BoneBlendWeight, Fields)
@@ -47,4 +47,4 @@ namespace MyPiccolo {
         std::vector<std::string> blend_mask_file_path;     // 混合动画遮罩文件路径
         std::vector<float>       blend_ratio;              // 混合比例
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

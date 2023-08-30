@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 
-project(MyPiccolo VERSION 0.1.0)
+project(Piccolo VERSION 0.1.0)
 
 if(WIN32)
     add_compile_options(/wd5262)

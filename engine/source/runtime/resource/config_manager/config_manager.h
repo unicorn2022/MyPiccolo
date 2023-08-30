@@ -2,7 +2,7 @@
 
 #include <filesystem>
 
-namespace MyPiccolo {
+namespace Piccolo {
     struct EngineInitParams;
 
     class ConfigManager {
@@ -40,4 +40,4 @@ namespace MyPiccolo {
         std::string m_global_rendering_res_url;
         std::string m_global_particle_res_url;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

@@ -6,7 +6,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-namespace MyPiccolo {
+namespace Piccolo {
     void metaExample() {
         Test1 test1_in;
         test1_in.m_int  = 12;
@@ -71,4 +71,4 @@ namespace MyPiccolo {
             }
         }
     }
-} // namespace MyPiccolo
+} // namespace Piccolo

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
 
     REFLECTION_TYPE(BoneBlendMask)
     CLASS(BoneBlendMask, Fields)
@@ -16,4 +16,4 @@ namespace MyPiccolo {
         std::string      skeleton_file_path; // 骨骼文件路径
         std::vector<int> enabled;            // 是否启用某个骨骼
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

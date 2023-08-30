@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 单个动画节点对应的骨骼节点&变换矩阵 */
     REFLECTION_TYPE(AnimationResultElement)
     CLASS(AnimationResultElement, WhiteListFields)
@@ -42,4 +42,4 @@ namespace MyPiccolo {
         META(Disable)
         AnimationResult animation_result; // 动画结果
     };
-} // namespace MyPiccolo
+} // namespace Piccolo

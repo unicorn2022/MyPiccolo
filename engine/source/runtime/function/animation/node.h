@@ -5,7 +5,7 @@
 
 #include "runtime/resource/res_type/data/skeleton_data.h"
 
-namespace MyPiccolo {
+namespace Piccolo {
     /* 单个节点 */
     class Node {
     public:
@@ -119,4 +119,4 @@ namespace MyPiccolo {
 
         size_t getID(void) const;
     };
-} // namespace MyPiccolo
+} // namespace Piccolo
