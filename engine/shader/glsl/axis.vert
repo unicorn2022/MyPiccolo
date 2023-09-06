@@ -5,7 +5,7 @@
 
 #extension GL_GOOGLE_include_directive : enable
 
-#include "../include/constants.h"
+#include "constants.vert"
 
 /* 点光源 */
 struct PointLight {
@@ -24,7 +24,7 @@ layout(set = 0, binding = 0) readonly buffer _unused_name_preframe {
     vec3  ambient_light;          // 环境光
     float _padding_ambient_light; // 环境光对齐
 
-    uint point_light_count;          // 点光源数量
+    uint point_light_num;            // 点光源数量
     uint _padding_point_light_num_1; // 点光源数量对齐1
     uint _padding_point_light_num_2; // 点光源数量对齐2
     uint _padding_point_light_num_3; // 点光源数量对齐3
