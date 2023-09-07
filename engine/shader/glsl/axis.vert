@@ -12,22 +12,23 @@ struct PointLight {
     vec3  position;           // 位置
     float radius;             // 半径
     vec3  intensity;          // 强度
-    float _padding_intensity; // 强度对齐
+    float _padding_intensity; /* 填充为4个float大小 */
 };
 
 /* uniform 数据 */
 layout(set = 0, binding = 0) readonly buffer _unused_name_preframe {
-    mat4  proj_view_matrix;         // 投影视图矩阵
+    mat4 proj_view_matrix; // 投影视图矩阵
+
     vec3  camera_position;          // 摄像机位置
-    float _padding_camera_position; // 摄像机位置对齐
+    float _padding_camera_position; /* 填充为4个float大小 */
 
     vec3  ambient_light;          // 环境光
-    float _padding_ambient_light; // 环境光对齐
+    float _padding_ambient_light; /* 填充为4个float大小 */
 
     uint point_light_num;            // 点光源数量
-    uint _padding_point_light_num_1; // 点光源数量对齐1
-    uint _padding_point_light_num_2; // 点光源数量对齐2
-    uint _padding_point_light_num_3; // 点光源数量对齐3
+    uint _padding_point_light_num_1; /* 填充为4个float大小 */
+    uint _padding_point_light_num_2; /* 填充为4个float大小 */
+    uint _padding_point_light_num_3; /* 填充为4个float大小 */
 
     PointLight scene_point_lights[m_max_point_light_count]; // 点光源
 };

@@ -1,8 +1,10 @@
 #version 310 es
 
-//--------------------
-//   蒙皮网格体绘制
-//--------------------
+//----------------------------------------------------------
+// 蒙皮网格体绘制:
+// 1. 计算当前顶点在相机空间中的标准位置
+// 2. 输出顶点的世界空间的位置、法线、切线、纹理坐标
+//----------------------------------------------------------
 
 #extension GL_GOOGLE_include_directive : enable
 
@@ -12,10 +14,10 @@
 /* 定向光源 */
 struct DirectionalLight {
     vec3  direction;          // 方向
-    float _padding_direction; // 方向对齐
+    float _padding_direction; /* 填充为4个float大小 */
 
     vec3  color;          // 颜色
-    float _padding_color; // 颜色对齐
+    float _padding_color; /* 填充为4个float大小 */
 };
 
 /* 点光源 */
@@ -28,17 +30,18 @@ struct PointLight {
 
 /* uniform 数据 */
 layout(set = 0, binding = 0) readonly buffer _unused_name_preframe {
-    mat4  proj_view_matrix;         // 投影视图矩阵
+    mat4 proj_view_matrix; // 投影视图矩阵
+
     vec3  camera_position;          // 摄像机位置
-    float _padding_camera_position; // 摄像机位置对齐
+    float _padding_camera_position; /* 填充为4个float大小 */
 
     vec3  ambient_light;          // 环境光
-    float _padding_ambient_light; // 环境光对齐
+    float _padding_ambient_light; /* 填充为4个float大小 */
 
     uint point_light_num;            // 点光源数量
-    uint _padding_point_light_num_1; // 点光源数量对齐1
-    uint _padding_point_light_num_2; // 点光源数量对齐2
-    uint _padding_point_light_num_3; // 点光源数量对齐3
+    uint _padding_point_light_num_1; /* 填充为4个float大小 */
+    uint _padding_point_light_num_2; /* 填充为4个float大小 */
+    uint _padding_point_light_num_3; /* 填充为4个float大小 */
 
     PointLight       scene_point_lights[m_max_point_light_count]; // 点光源
     DirectionalLight scene_directional_light;                     // 定向光源
@@ -70,6 +73,7 @@ void main() {
     highp mat4  model_matrix           = mesh_instances[gl_InstanceIndex].model_matrix;
     highp float enable_vertex_blending = mesh_instances[gl_InstanceIndex].enable_vertex_blending;
 
+    // 顶点在模型空间的位置、法线、切线
     highp vec3 model_position;
     highp vec3 model_normal;
     highp vec3 model_tangent;
@@ -115,17 +119,17 @@ void main() {
         model_tangent  = in_tangent;
     }
 
-    // 计算世界空间下的位置、法线、切线
-    out_world_position = (model_matrix * vec4(model_position, 1.0)).xyz;
-
-    gl_Position = proj_view_matrix * vec4(out_world_position, 1.0f);
-
     mat3x3 tangend_matrix = mat3x3(
         model_matrix[0].xyz,
         model_matrix[1].xyz,
         model_matrix[2].xyz);
-    out_normal = normalize(tangend_matrix * model_normal);
-    out_tagent = normalize(tangend_matrix * model_tangent);
 
-    out_texcoord = in_texcoord;
+    // 计算世界空间下的位置、法线、切线、纹理坐标
+    out_world_position = (model_matrix * vec4(model_position, 1.0)).xyz;
+    out_normal         = normalize(tangend_matrix * model_normal);
+    out_tagent         = normalize(tangend_matrix * model_tangent);
+    out_texcoord       = in_texcoord;
+
+    // 当前顶点在相机空间中的位置
+    gl_Position = proj_view_matrix * vec4(out_world_position, 1.0f);
 }

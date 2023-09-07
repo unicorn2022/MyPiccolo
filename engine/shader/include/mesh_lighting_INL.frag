@@ -95,7 +95,7 @@ highp vec3 Libl = (kD * diffuse + specular);
     highp float NoL = min(dot(N, L), 1.0);
 
     if (NoL > 0.0) {
-        // 观察点在标准空间下的位置
+        // 通过透视除法, 计算观察点在标准空间下的位置
         highp vec4 position_clip = directional_light_proj_view * vec4(in_world_position, 1.0);
         highp vec3 position_ndc  = position_clip.xyz / position_clip.w;
 
