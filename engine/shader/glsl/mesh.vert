@@ -22,10 +22,11 @@ struct DirectionalLight {
 
 /* 点光源 */
 struct PointLight {
-    vec3  position;           // 位置
-    float radius;             // 半径
+    vec3  position; // 位置
+    float radius;   // 半径
+
     vec3  intensity;          // 强度
-    float _padding_intensity; // 强度对齐
+    float _padding_intensity; /* 填充为4个float大小 */
 };
 
 /* uniform 数据 */
