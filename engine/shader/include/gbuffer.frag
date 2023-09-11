@@ -4,31 +4,35 @@ struct PGBufferData {
     highp float metallic;       // 金属度
     highp float specular;       // 高光度
     highp float roughness;      // 粗糙度
-    highp uint  shadingModelID; // 着色模型ID
+    highp uint  shadingModelID; // 着色模型
 };
 
 // 着色模式: unLit, defaultLit
 #define SHADINGMODELID_UNLIT 0U
 #define SHADINGMODELID_DEFAULT_LIT 1U
 
-// 法线
+// 编码法线 [-1,1] => [0,1]
 highp vec3 EncodeNormal(highp vec3 N) { return N * 0.5 + 0.5; }
+// 解码法线 [0,1] => [-1,1]
 highp vec3 DecodeNormal(highp vec3 N) { return N * 2.0 - 1.0; }
 
-// 在渲染目标上使用sRGB，以提高深色的精度
+// 编码颜色
 highp vec3 EncodeBaseColor(highp vec3 baseColor) { return baseColor; }
+// 解码颜色
 highp vec3 DecodeBaseColor(highp vec3 baseColor) { return baseColor; }
 
-// 着色模型ID
+// 编码着色模型: [0/1] => [0,1]
 highp float EncodeShadingModelId(highp uint ShadingModelId) {
     highp uint Value = ShadingModelId;
     return (float(Value) / float(255));
 }
+// 解码着色模型: [0,1] => [0/1]
 highp uint DecodeShadingModelId(highp float InPackedChannel) {
     return uint(round(InPackedChannel * float(255)));
 }
 
-// GBuffer数据
+// 将当前像素的GBuffer数据编码为3个vec4向量
+// A => 法线, B => 金属度,高光度,粗糙度,着色模型, C => 基础颜色
 void EncodeGBufferData(
     PGBufferData   InGBuffer,
     out highp vec4 OutGBufferA,
@@ -44,6 +48,7 @@ void EncodeGBufferData(
 
     OutGBufferC.rgb = EncodeBaseColor(InGBuffer.baseColor);
 }
+// 从3个vec4向量解码当前像素的GBuffer数据
 void DecodeGBufferData(
     out PGBufferData OutGBuffer,
     highp vec4       InGBufferA,

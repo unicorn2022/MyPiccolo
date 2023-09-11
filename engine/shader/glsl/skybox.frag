@@ -21,7 +21,7 @@ layout(location = 0) out highp vec4 out_scene_color;
 
 /* 主函数 */
 void main() {
-    // UVW坐标转换
+    // 交换Y和Z坐标以适应天空盒纹理坐标: 通常天空盒的纹理坐标布局可能会将y轴与纹理的高度对应
     highp vec3 origin_sample_UVW = vec3(in_UVW.x, in_UVW.z, in_UVW.y);
 
     // 采样天空盒
