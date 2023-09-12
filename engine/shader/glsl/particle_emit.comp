@@ -1,0 +1,202 @@
+#version 450
+
+//-----------------------------------------------
+// 粒子效果-发射
+//-----------------------------------------------
+
+#define POINT_TYPE_EMITTER 0 // 发射器类型: 点
+#define MESH_TYPE_EMITTER 1  // 发射器类型: mesh
+
+/* 粒子属性 */
+struct Particle {
+    vec3  pos;    // 位置
+    float life;   // 生命周期
+    vec3  vel;    // 速度
+    float size_x; // 大小
+    vec3  acc;    // 加速度
+    float size_y; // 大小
+    vec4  color;  // 颜色
+};
+/* 用于计数每种粒子有多少个的buffer */
+struct CountBuffer {
+    int dead_count;            // 已死亡粒子
+    int alive_count;           // 存活的粒子
+    int alive_count_after_sim; // 模拟后存活的粒子
+    int emit_count;            // 发射的粒子
+};
+/* 粒子发射器的参数 */
+struct Argument {
+    uvec4 emit_count;     // 发射个数
+    uvec4 simulate_count; // 模拟次数
+    int   alive_flap_bit; // 当前帧使用哪个存活列表
+};
+/* 粒子发射器属性 */
+struct EmitterInfo {
+    vec4 pos;          // 基础位置(可变)
+    mat4 rotation;     // 旋转
+    vec4 vel;          // 基础速度(可变)
+    vec4 acc;          // 基础加速度(可变)
+    vec3 size;         // 基础大小
+    int  emitter_type; // 发射器类型
+    vec4 life;         // 基础生命周期(可变)
+    vec4 color;        // 颜色rgba
+};
+
+/* uniform 数据 */
+layout(binding = 0) uniform UBO {
+    float emit_delta;      // 发射间隔
+    int   xemit_count;     // 发射个数
+    float max_life;        // 最大生命周期
+    float fixed_time_step; // 固定时间步长
+    float random0;         // 随机数
+    float random1;         // 随机数
+    float random2;         // 随机数
+    uint  frameindex;      // 帧编号
+    vec4  gravity;         // 重力
+    uvec4 viewport;        // 视口
+    vec4  extent;          // 窗口大小
+}
+ubo;
+layout(set = 0, binding = 1) buffer Pos {
+    Particle Particles[]; // 粒子属性
+};
+layout(set = 0, binding = 2) buffer Counter {
+    CountBuffer counter; // 粒子计数
+};
+layout(set = 0, binding = 3) buffer indirectArgumentBuffer {
+    Argument argument; // 粒子发射器的参数
+};
+layout(set = 0, binding = 4) buffer AliveBuffer {
+    ivec4 alivelist[]; // 存活粒子列表
+};
+layout(set = 0, binding = 5) buffer DeadBuffer {
+    ivec4 deadbuffer[]; // 死亡粒子列表
+};
+layout(set = 0, binding = 6) buffer AliveBufferNext {
+    ivec4 alivelistnext[]; // 存活粒子列表(下一帧)
+};
+layout(set = 0, binding = 7) buffer EmitterInfoBuffer {
+    EmitterInfo emitterinfo; // 发射器属性
+};
+layout(set = 0, binding = 10) uniform sampler2D particle_texture; // 粒子纹理
+
+// Gold Noise ©2015 dcerisano@standard3d.com
+// - based on the Golden Ratio
+// - uniform normalized distribution
+// - fastest static noise generator function (also runs at low precision)
+// - use with indicated fractional seeding method
+const float PHI = 1.61803398874989484820459; // Φ = Golden Ratio
+float       gold_noise(in vec2 xy, in float seed) { return fract(tan(distance(xy * PHI, xy) * seed) * xy.x); }
+
+const float PI = 3.1415926535897932384626433832795;
+
+// 指定本地工作组大小为 256*1*1
+layout(local_size_x = 256) in;
+
+/* 主函数 */
+void main() {
+    emitterinfo.life.z += 1;
+    uint threadId = gl_GlobalInvocationID.x; // 线程id
+
+    if (emitterinfo.life.z > ubo.emit_delta) {
+        emitterinfo.life.z = 1;
+        // 一共发射 counter.emit_count 个粒子
+        if (threadId < counter.emit_count) {
+            bool     fix = false;
+            Particle particle;
+            float    rnd0 = gold_noise(vec2(threadId * ubo.random0, threadId * ubo.random1), ubo.random2);
+            float    rnd1 = gold_noise(vec2(threadId * ubo.random0, threadId * ubo.random1), ubo.random2 + 0.2);
+            float    rnd2 = gold_noise(vec2(threadId * ubo.random0, threadId * ubo.random1), ubo.random2 + 0.4);
+
+            /*
+             * 生成例子的属性
+             */
+            // 发射器类型: 点
+            if (emitterinfo.emitter_type == POINT_TYPE_EMITTER) {
+                // 发射的方位角
+                float theta = 0.15 * PI;
+                float phi   = (2 * rnd0 - 1) * PI;
+                // 发射的半径
+                float r = 1 + rnd1;
+                // 发射的速度
+                float x = r * sin(theta) * cos(phi);
+                float y = r * sin(theta) * sin(phi);
+                float z = r * cos(theta);
+
+                // 粒子的位置
+                particle.pos.x = 0.1 * (2 * rnd0 - 1) * emitterinfo.pos.w + emitterinfo.pos.x;
+                particle.pos.y = 0.1 * (2 * rnd1 - 1) * emitterinfo.pos.w + emitterinfo.pos.y;
+                particle.pos.z = 0.1 * (2 * rnd2 - 1) * emitterinfo.pos.w + emitterinfo.pos.z;
+                // 粒子的速度
+                particle.vel.x = x * emitterinfo.vel.w + emitterinfo.vel.x;
+                particle.vel.y = y * emitterinfo.vel.w + emitterinfo.vel.y;
+                particle.vel.z = z * emitterinfo.vel.w + emitterinfo.vel.z;
+                // 粒子的颜色
+                particle.color = emitterinfo.color;
+            }
+            // 发射器类型: 网格体
+            else if (emitterinfo.emitter_type == MESH_TYPE_EMITTER) {
+                vec4 rotated_pos = emitterinfo.rotation * vec4(0, rnd0, rnd1, 0);
+                // 粒子的位置
+                particle.pos.x = emitterinfo.pos.x + rotated_pos.x;
+                particle.pos.y = emitterinfo.pos.y + rotated_pos.y;
+                particle.pos.z = emitterinfo.pos.z + rotated_pos.z;
+                // 粒子的颜色
+                vec4 color = texture(particle_texture, vec2(1.0 - rnd0, 1.0 - rnd1));
+                if (color.w > 0.9) {
+                    particle.color = color;
+                    fix            = true;
+                } else {
+                    particle.color.x = 1.0 - rnd0;
+                    particle.color.y = 1.0 - rnd1;
+                    particle.color.z = 1.0 - rnd2;
+                    particle.color.w = 0.0f;
+
+                    vec4 rotated_vel = emitterinfo.rotation * vec4(
+                                                                  (rnd0 * 2 - 1) * emitterinfo.vel.w + emitterinfo.vel.x,
+                                                                  (rnd1 * 2 - 1) * emitterinfo.vel.w + emitterinfo.vel.y,
+                                                                  (rnd2 * 2 - 1) * emitterinfo.vel.w + emitterinfo.vel.z,
+                                                                  1);
+                    // 粒子的速度
+                    particle.vel.x = rotated_vel.x;
+                    particle.vel.y = rotated_vel.y;
+                    particle.vel.z = rotated_vel.z;
+                }
+            }
+            // 发射器类型: 其他
+            else {
+            }
+            // 粒子的加速度
+            if (!fix) {
+                particle.acc.x = emitterinfo.acc.x + ubo.gravity.x;
+                particle.acc.y = emitterinfo.acc.y + ubo.gravity.y;
+                particle.acc.z = emitterinfo.acc.z + ubo.gravity.z;
+            } else {
+                particle.acc = vec3(0, 0, 0);
+                particle.vel = vec3(0, 0, 0);
+            }
+            // 粒子的生命周期
+            particle.life = rnd0 * emitterinfo.life.y + emitterinfo.life.x;
+            // 粒子的大小
+            particle.size_x = emitterinfo.size.x;
+            particle.size_y = emitterinfo.size.y;
+
+            /*
+             * 使用 particle pool, alive list[0/1], dead list 记录粒子的生命周期
+             */
+            // 从 dead poll 中获取粒子
+            int deadCount = atomicAdd(counter.dead_count, -1);
+            int index     = deadbuffer[deadCount - 1].x;
+            // 添加到粒子列表
+            Particles[index] = particle;
+            // 将 index 添加到存活列表
+            if (argument.alive_flap_bit == 0) {
+                int aliveIndex          = atomicAdd(counter.alive_count, 1);
+                alivelist[aliveIndex].x = index;
+            } else {
+                int aliveIndex              = atomicAdd(counter.alive_count, 1);
+                alivelistnext[aliveIndex].x = index;
+            }
+        }
+    }
+}

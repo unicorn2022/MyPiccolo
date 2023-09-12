@@ -1,0 +1,183 @@
+#version 450
+
+//-----------------------------------------------
+// 粒子效果-模拟
+//-----------------------------------------------
+
+#extension GL_GOOGLE_include_directive : enable
+
+#include "constants.vert"
+
+/* 粒子属性 */
+struct Particle {
+    vec3  pos;    // 位置
+    float life;   // 生命周期
+    vec3  vel;    // 速度
+    float size_x; // 大小
+    vec3  acc;    // 加速度
+    float size_y; // 大小
+    vec4  color;  // 颜色
+};
+/* 用于计数每种粒子有多少个的buffer */
+struct CountBuffer {
+    int dead_count;            // 已死亡粒子
+    int alive_count;           // 存活的粒子
+    int alive_count_after_sim; // 模拟后存活的粒子
+    int emit_count;            // 发射的粒子
+};
+/* 粒子发射器的参数 */
+struct Argument {
+    uvec4 emit_count;     // 发射个数
+    uvec4 simulate_count; // 模拟次数
+    int   alive_flap_bit; // 当前帧使用哪个存活列表
+};
+
+/* uniform 数据 */
+layout(binding = 0) uniform UBO {
+    float emit_delta;      // 发射间隔
+    int   xemit_count;     // 发射个数
+    float max_life;        // 最大生命周期
+    float fixed_time_step; // 固定时间步长
+    float random0;         // 随机数
+    float random1;         // 随机数
+    float random2;         // 随机数
+    uint  frameindex;      // 帧编号
+    vec4  gravity;         // 重力
+    uvec4 viewport;        // 视口
+    vec4  extent;          // 窗口大小
+}
+ubo;
+layout(std140, binding = 1) buffer Pos {
+    Particle Particles[]; // 粒子属性
+};
+layout(std140, binding = 2) buffer Counter {
+    CountBuffer counter; // 粒子计数
+};
+layout(std140, binding = 3) buffer indirectArgumentBuffer {
+    Argument argument; // 粒子发射器的参数
+};
+layout(std140, binding = 4) buffer AliveBuffer {
+    ivec4 alivelist[]; // 存活粒子列表
+};
+layout(std140, binding = 5) buffer DeadBuffer {
+    ivec4 deadbuffer[]; // 死亡粒子列表
+};
+layout(std140, binding = 6) buffer AliveBufferNext {
+    ivec4 alivelistnext[]; // 存活粒子列表(下一帧)
+};
+layout(std140, binding = 8) uniform _unused_name_perframe {
+    mat4 view_matrix;      // 视图矩阵
+    mat4 proj_view_matrix; // 投影视图矩阵
+    mat4 proj_inv_matrix;  // 投影矩阵的逆矩阵
+};
+layout(std140, binding = 9) buffer _unused_name_render_particle {
+    Particle renderParticles[]; // 需要渲染的粒子
+};
+
+layout(set = 1, binding = 0, rgba8) uniform readonly image2D in_normal; // 法线贴图
+layout(set = 1, binding = 1) uniform sampler2D in_scene_depth;          // 场景深度贴图
+
+// 指定本地工作组大小为 256*1*1
+layout(local_size_x = 256) in;
+
+/* 主函数 */
+void main() {
+    uint threadId = gl_GlobalInvocationID.x;
+
+    // 当前一共有 counter.alive_count 个粒子存活
+    if (threadId < counter.alive_count) {
+        // 读取粒子属性
+        float    dt         = ubo.fixed_time_step;
+        int      particleId = argument.alive_flap_bit == 0 ? alivelist[threadId].x : alivelistnext[threadId].x;
+        Particle particle   = Particles[particleId];
+
+        // 当前粒子仍存活
+        if (particle.life > 0) {
+            // 更新粒子的速度、位置
+            particle.vel += particle.acc * dt;
+            particle.pos += particle.vel * dt;
+
+            // 相机空间的粒子位置
+            vec3 viewSpaceParticlePosition = (view_matrix * vec4(particle.pos, 1)).xyz;
+            // 屏幕空间的粒子位置
+            vec4 screenSpaceParticlePosition = proj_view_matrix * vec4(particle.pos, 1);
+            screenSpaceParticlePosition.xyz /= screenSpaceParticlePosition.w;
+
+            // 屏幕空间碰撞
+            if (screenSpaceParticlePosition.x > -1 && screenSpaceParticlePosition.x < 1 && screenSpaceParticlePosition.y > -1 && screenSpaceParticlePosition.y < 1) {
+                // uv坐标
+                vec2 uv = screenSpaceParticlePosition.xy * vec2(0.5f, 0.5f) + 0.5f;
+                // 像素坐标
+                float px = (ubo.viewport.x + uv.x * ubo.viewport.z);
+                float py = (ubo.viewport.y + uv.y * ubo.viewport.w);
+
+                // 读取场景中该点的深度
+                float depth = texture(in_scene_depth, vec2(px / ubo.extent.x, py / ubo.extent.y)).r;
+
+                // 场景中该点在相机空间的位置
+                vec4 viewSpacePosOfDepthBuffer;
+                viewSpacePosOfDepthBuffer.xy = screenSpaceParticlePosition.xy;
+                viewSpacePosOfDepthBuffer.z  = depth;
+                viewSpacePosOfDepthBuffer.w  = 1;
+                // 使用逆投影矩阵, 转化到相机空间
+                viewSpacePosOfDepthBuffer = proj_inv_matrix * viewSpacePosOfDepthBuffer;
+                viewSpacePosOfDepthBuffer.xyz /= viewSpacePosOfDepthBuffer.w;
+
+                // 粒子与场景中该点的碰撞检测
+                float collider_thickness = 0.5f;
+                if ((viewSpaceParticlePosition.z < viewSpacePosOfDepthBuffer.z) && (viewSpaceParticlePosition.z + collider_thickness > viewSpacePosOfDepthBuffer.z)) {
+                    // 场景中该点的法线
+                    vec3 world_normal = (imageLoad(in_normal, ivec2(px, py)).rgb) * 2 - 1;
+
+                    // 粒子的速度与法线夹角为钝角, 则反弹
+                    if (dot(particle.vel, world_normal) < 0) {
+                        // 粒子速度的方向
+                        vec3 prevd = normalize(particle.vel);
+                        // 粒子与场景中该点的距离, 在速度方向上的投影
+                        float distance = abs(dot(prevd, (viewSpacePosOfDepthBuffer.xyz - viewSpaceParticlePosition.xyz)));
+                        // 粒子新的速度: 沿法线反射
+                        vec3 newv = 0.4f * reflect(particle.vel, world_normal);
+
+                        // 稳定化
+                        if (length(newv) < 0.3f) {
+                            particle.vel = vec3(0, 0, 0);
+                        } else {
+                            particle.vel = newv;
+                        }
+
+                        // 将粒子推到表面上, 防止多次碰撞
+                        particle.pos += -distance * prevd + particle.vel * dt;
+                    }
+                }
+            }
+        }
+
+        // 更新粒子的生命周期
+        if (particle.life < 0) {
+            // 粒子已死亡, 将其添加到死亡列表中
+            uint deadIndex          = atomicAdd(counter.dead_count, 1);
+            deadbuffer[deadIndex].x = particleId;
+            // 清除粒子状态
+            particle.pos    = vec3(0, 0, 0);
+            particle.life   = 0;
+            particle.vel    = vec3(0, 0, 0);
+            particle.size_x = 0;
+            particle.acc    = vec3(0, 0, 0);
+            particle.size_y = 0;
+            particle.color  = vec4(0, 0, 0, 0);
+        } else {
+            // 粒子仍存活, 将其添加到next存活列表中
+            int nextAliveIndex = atomicAdd(counter.alive_count_after_sim, 1);
+            if (argument.alive_flap_bit == 0) {
+                alivelistnext[nextAliveIndex].x = particleId;
+            } else {
+                alivelist[nextAliveIndex].x = particleId;
+            }
+            particle.life -= dt;
+
+            renderParticles[nextAliveIndex] = particle;
+        }
+
+        Particle[particleId] = particle;
+    }
+}

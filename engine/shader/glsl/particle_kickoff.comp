@@ -1,0 +1,75 @@
+#version 450
+
+//-----------------------------------------------
+// 粒子效果-死亡
+//-----------------------------------------------
+/* 粒子属性 */
+struct Particle {
+    vec3  pos;    // 位置
+    float life;   // 生命周期
+    vec3  vel;    // 速度
+    float size_x; // 大小
+    vec3  acc;    // 加速度
+    float size_y; // 大小
+    vec4  color;  // 颜色
+};
+/* 用于计数每种粒子有多少个的buffer */
+struct CountBuffer {
+    int dead_count;            // 已死亡粒子
+    int alive_count;           // 存活的粒子
+    int alive_count_after_sim; // 模拟后存活的粒子
+    int emit_count;            // 发射的粒子
+};
+/* 粒子发射器的参数 */
+struct Argument {
+    uvec4 emit_count;     // 发射个数
+    uvec4 simulate_count; // 模拟次数
+    int   alive_flap_bit; // 当前帧使用哪个存活列表
+};
+
+/* uniform 数据 */
+layout(binding = 0) uniform UBO {
+    float emit_delta;      // 发射间隔
+    int   xemit_count;     // 发射个数
+    float max_life;        // 最大生命周期
+    float fixed_time_step; // 固定时间步长
+    float random0;         // 随机数
+    float random1;         // 随机数
+    float random2;         // 随机数
+    uint  frameindex;      // 帧编号
+    vec4  gravity;         // 重力
+    uvec4 viewport;        // 视口
+    vec4  extent;          // 窗口大小
+}
+ubo;
+layout(std140, binding = 2) buffer Counter {
+    CountBuffer counter; // 粒子计数
+};
+layout(std140, binding = 3) buffer ArgumentBuffer {
+    Argument argument; // 粒子发射器的参数
+};
+
+// 指定本地工作组大小为 1*1*1
+layout(local_size_x = 1) in;
+
+/* 主函数 */
+void main() {
+    int emitCount = min(counter.dead_count, ubo.xemit_count);
+
+    // 发射的间接参数
+    argument.emit_count.xyz = uvec3(ceil(float(emitCount) / float(256)), 1, 1);
+
+    // 模拟的间接参数
+    argument.simulate_count.xyz = uvec3(ceil(float(emitCount + counter.alive_count_after_sim) / float(256)), 1, 1);
+
+    // 设置新的存活数目
+    counter.alive_count = counter.alive_count_after_sim;
+
+    // 重置粒子数目
+    counter.alive_count_after_sim = 0;
+
+    counter.emit_count = emitCount;
+
+    // 翻转列表
+    argument.alive_flap_bit = 1 - argument.alive_flap_bit;
+}
